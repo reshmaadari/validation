@@ -17,8 +17,39 @@ use App\Http\Controllers\taskController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/regform',[taskController::class,'regform']);
-Route::get('/login',[taskController::class,'login']);
-Route::post('/save',[taskController::class,'reg_valid']);
-Route::post('/show',[taskController::class,'login_valid']);
+Route::group(['middleware'=>['loggedin']],function(){
+    Route::get('/regform',[taskController::class,'regform']);
+    Route::get('/login',[taskController::class,'login']);
+});
 
+Route::post('/save',[taskController::class,'reg_valid']);
+Route::post('/store',[taskController::class,'login_valid']);
+
+Route::group(['middleware'=>['userAuth']],function(){
+    Route::get('/dashboard',function(){return view('dashboard');});
+    Route::get('/list',[taskController::class,'list']);
+});
+
+
+Route::get('/logout',function(){
+    session()->pull('username');
+    return redirect('login');
+});
+
+Route::group(['middleware'=>['cantAuth']],function(){
+    Route::get('ageform',function(){return view('ageform');});
+});
+// Route::get('ageform',function(){return view('ageform');});
+Route::post('checkage',[taskController::class,'checkage']);
+Route::get('signout',function(){
+    session()->pull('age');
+    return redirect('ageform');
+});
+Route::group(['middleware'=>['canAuth']],function(){
+Route::group(['middleware'=>['ageAuth']],function(){
+    Route::get('access',function(){return view('access');});
+});
+Route::group(['middleware'=>['noageAuth']],function(){
+    Route::get('noaccess',function(){return view('noaccess');});
+});
+});

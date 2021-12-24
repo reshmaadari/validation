@@ -44,6 +44,24 @@ class Kernel extends HttpKernel
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
+        'userAuth'=>[
+            \App\Http\Middleware\userAuth::class,
+        ],
+        'loggedin'=>[
+            \App\Http\Middleware\loggedin::class,
+        ],
+        'ageAuth'=>[
+            \App\Http\Middleware\ageAuth::class,
+        ],
+        'noageAuth'=>[
+            \App\Http\Middleware\noageAuth::class,
+        ],
+        'canAuth'=>[
+            \App\Http\Middleware\canAuth::class,
+        ],
+        'cantAuth'=>[
+            \App\Http\Middleware\cantAuth::class,
+        ],
     ];
 
     /**

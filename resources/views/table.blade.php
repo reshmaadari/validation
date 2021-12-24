@@ -13,7 +13,7 @@
     </style>
 </head>
 <body>
-<a style="margin-left:820px" href="{{url('/regform')}}">register</a><br><br>
+<a style="margin-left:820px" href="{{url('/dashboard')}}">dashboard</a>
 <center>
 <table >
     <th >
@@ -24,15 +24,15 @@
         </tr>
     <th>
     <tbody>
-  @foreach($data as $dataa)
-        <tr>
-            <td>{{$dataa->id}}</td>
-            <td>{{$dataa->username}}</td>
-            <td>{{$dataa->email}}</td>
-        </tr>
-        @endforeach
-  </tbody>
+@foreach($userss as $user)
+<tr>
+  <td>{{$user->id}}</td>
+  <td>{{$user->username}}</td>
+  <td>{{$user->email}}</td>
+</tr>
+@endforeach
+    </tbody>
 </table>
-</center></form>
+</center>
 </body>
 </html>

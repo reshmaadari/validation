@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Crypt;
+use DB;
 use Illuminate\Http\Request;
 use App\Models\register;
 class taskController extends Controller
@@ -29,14 +30,18 @@ class taskController extends Controller
         $valid=$req->validate([
             'email'=>'required|email',
             'password'=>'required|min:8|max:12']);
+            $req->session()->put('register',$valid);
             if($valid){
                 $user=register::where('email','=',$req->email)->first();
+                $z=$user->username;
                 if($user){
                     $x=($req->password);
                     $y=Crypt::decrypt($user->password);
                     if($x==$y){
-                        $store=register::all();
-                        return view('table',['data'=>$store]);
+                        $req->session()->put('username',$z);
+                        return redirect('dashboard');
+                        // $store=register::all();
+                        // return view('dashboard',['data'=>$store]);
                     }
                     else{
                         return redirect("/login")->with("status","Incorrect password");
@@ -47,4 +52,14 @@ class taskController extends Controller
                 }
             }
     }
+    function list(){
+        $users = DB::select('select * from registers');
+        return view('table',['userss'=>$users]);
+    }
+    function checkage(Request $req){
+        $a=$req->age;
+        $req->session()->put('age',$a);
+        return redirect('access');
+    }
+    
 }

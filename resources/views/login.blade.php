@@ -14,7 +14,7 @@
 <body>
 
 
-<center><br><h2>login form</h2><br></center><a style="margin-left:820px" href="{{url('/regform')}}">Logout</a><br><br>
+<center><br><h2>login form</h2><br></center>
         <form method="POST" action="">
         
         @csrf
@@ -23,10 +23,10 @@
             <span style="color:red" >@error('email'){{$message}}@enderror</span><br><br>
             <label>password:</label><input type="text" name="password">
             <span style="color:red" >@error('password'){{$message}}@enderror</span><br>
-            <br><button formaction="{{url('/show')}}">Login</button>
+            <br><button formaction="{{url('/store')}}">Login</button>
     </form>
     <center><table>
-    <tr><td><a href="{{ url('regform') }}">already registered?</a></td></tr>
+    <tr><td><a href="{{ url('regform') }}">not registered?</a></td></tr>
     </table>
     <div  style="color:red" >
                 {{ session('status') }}
